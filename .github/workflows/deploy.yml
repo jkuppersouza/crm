@@ -1,0 +1,59 @@
+# ─────────────────────────────────────────────────────────────────
+#  Publica o CRM no GitHub Pages automaticamente.
+#
+#  Roda sozinho a cada push no branch main: instala as dependências,
+#  gera o build de produção e publica o site.
+#
+#  ⚠️ Para funcionar, ative uma vez no GitHub:
+#     Settings → Pages → Source: "GitHub Actions"
+# ─────────────────────────────────────────────────────────────────
+name: Publicar no GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: # permite publicar manualmente pela aba Actions
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Se houver dois deploys ao mesmo tempo, o mais novo espera o anterior
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Instalar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Instalar dependências
+        run: npm ci
+
+      - name: Gerar build de produção
+        run: npm run build
+
+      - name: Preparar artefato do Pages
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Publicar
+        id: deployment
+        uses: actions/deploy-pages@v4
