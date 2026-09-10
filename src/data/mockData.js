@@ -47,7 +47,7 @@ export const COMPANY_PROFILE = {
 //    `id` é referenciado por deals, contatos e tarefas.
 // ─────────────────────────────────────────────────────────────────────
 export const TEAM = [
-  { id: 'u1', name: 'Ana Beatriz Moraes', role: 'Gerente Comercial', email: 'ana.moraes@nexustec.com.br', phone: '(11) 98812-4409', initials: 'AM', color: 'bg-indigo-500', permission: 'Administrador', status: 'ativo', goal: 420000 },
+  { id: 'u1', name: 'João Kupper', role: 'Gerente Comercial', email: 'joao.kupper@nexustec.com.br', phone: '(11) 98812-4409', initials: 'JK', color: 'bg-indigo-500', permission: 'Administrador', status: 'ativo', goal: 420000 },
   { id: 'u2', name: 'Rafael Nogueira', role: 'Executivo de Contas Sr.', email: 'rafael.nogueira@nexustec.com.br', phone: '(11) 99145-7723', initials: 'RN', color: 'bg-emerald-500', permission: 'Vendedor', status: 'ativo', goal: 380000 },
   { id: 'u3', name: 'Camila Duarte', role: 'Executiva de Contas', email: 'camila.duarte@nexustec.com.br', phone: '(11) 98330-1187', initials: 'CD', color: 'bg-amber-500', permission: 'Vendedor', status: 'ativo', goal: 320000 },
   { id: 'u4', name: 'Thiago Menezes', role: 'SDR / Pré-vendas', email: 'thiago.menezes@nexustec.com.br', phone: '(11) 97722-6650', initials: 'TM', color: 'bg-sky-500', permission: 'Vendedor', status: 'ativo', goal: 180000 },
