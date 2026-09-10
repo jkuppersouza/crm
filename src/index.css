@@ -1,0 +1,141 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Valores iniciais — sobrescritos em runtime por src/config/theme.js */
+    --brand-50: 238 242 255;
+    --brand-100: 224 231 255;
+    --brand-200: 199 210 254;
+    --brand-300: 165 180 252;
+    --brand-400: 129 140 248;
+    --brand-500: 99 102 241;
+    --brand-600: 79 70 229;
+    --brand-700: 67 56 202;
+    --brand-800: 55 48 163;
+    --brand-900: 49 46 129;
+    --brand-950: 30 27 75;
+    /* Cor do texto sobre a cor da marca */
+    --brand-fg: 0 0 0;
+  }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply bg-slate-50 text-slate-900 dark:bg-black dark:text-white;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+    letter-spacing: -0.011em;
+  }
+
+  /* 🎨 Títulos com o gradiente branco → transparente do template */
+  .text-gradient {
+    background: linear-gradient(to bottom, #ffffff, #ffffff, rgba(255, 255, 255, 0.6));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -0.05em;
+  }
+
+  /* No modo claro o gradiente vira preto, para manter o contraste */
+  html:not(.dark) .text-gradient {
+    background: linear-gradient(to bottom, #0b0b0d, #0b0b0d, rgba(11, 11, 13, 0.65));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* Números alinhados em tabelas e métricas */
+  .tnum {
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Scrollbar discreta, estilo SaaS */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply rounded-full bg-slate-300/70 dark:bg-slate-700/70;
+    border: 3px solid transparent;
+    background-clip: content-box;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-slate-400/80 dark:bg-slate-600;
+    background-clip: content-box;
+  }
+
+  *:focus-visible {
+    @apply outline-none ring-2 ring-brand-500/60 ring-offset-2 ring-offset-white dark:ring-offset-slate-950;
+  }
+}
+
+@layer components {
+  /* Superfície padrão de card — usada em toda a aplicação.
+     🎨 No escuro é vidro fosco sobre o preto, como no template. */
+  .surface {
+    @apply rounded-2xl border border-slate-200/80 bg-white shadow-card
+           dark:border-slate-800/60 dark:bg-slate-900/60 dark:shadow-none dark:backdrop-blur-md;
+  }
+
+  /* Campo de formulário padrão */
+  .field {
+    @apply w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-sm text-slate-900 placeholder:text-slate-400
+           transition-colors focus:border-brand-500 focus:outline-none focus:ring-4 focus:ring-brand-500/10
+           dark:border-slate-800 dark:bg-slate-800/40 dark:text-white dark:placeholder:text-slate-500
+           dark:focus:border-white/30 dark:focus:ring-white/10;
+  }
+
+  .field-label {
+    @apply mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400;
+  }
+}
+
+/* ────────────────────────────────────────────────────────────────
+   🎨 BRILHO DE FUNDO — o halo suave atrás do conteúdo, como no
+   template. Só aparece no modo escuro. Ajuste a opacidade aqui.
+   ──────────────────────────────────────────────────────────────── */
+.app-glow::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  background:
+    radial-gradient(60% 45% at 50% -10%, rgb(var(--brand-500) / 0.07), transparent 70%),
+    radial-gradient(40% 35% at 85% 5%, rgb(var(--brand-400) / 0.04), transparent 70%);
+}
+
+.dark .app-glow::before {
+  opacity: 1;
+}
+
+/* Animações do template */
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Feedback visual do drag and drop no Kanban */
+.deal-dragging {
+  opacity: 0.4;
+  transform: rotate(1.5deg) scale(0.98);
+}
+
+.column-drop-target {
+  @apply bg-brand-50/70 ring-2 ring-inset ring-brand-400/50 dark:bg-brand-500/5;
+}
